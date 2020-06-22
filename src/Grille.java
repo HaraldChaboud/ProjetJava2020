@@ -46,19 +46,19 @@ class Sudoku {
 	}
 
 	//Fonction qui vérifie qu'un nombre soit valide pour une ligne donnée
-	private boolean isAlRow(int row, int num) {
+	private boolean isAlligne(int ligne, int num) {
 		for (int i = 0; i < 9; i++) {
-			if (sudoku[row][i] == num) {
+			if (sudoku[ligne][i] == num) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	//Fonction qui vérifie qu'un nombre soit valide pour une colonne donnée
-	private boolean isAlCol(int col, int num) {
+	//Fonction qui vérifie qu'un nombre soit valide pour une colonneonne donnée
+	private boolean isAlcolonne(int colonne, int num) {
 		for (int i = 0; i < 9; i++) {
-			if (sudoku[i][col] == num) {
+			if (sudoku[i][colonne] == num) {
 				return true;
 			}
 		}
@@ -66,9 +66,9 @@ class Sudoku {
 	}
 
 	//Fonction qui vérifie qu'un nombre soit valide pour une zone de 9x9 donnée
-	private boolean isAlBox(int row, int col, int num) {
-		int groupeX = row - row % 3;
-		int groupeY = col - col % 3;
+	private boolean isAlBox(int ligne, int colonne, int num) {
+		int groupeX = ligne - ligne % 3;
+		int groupeY = colonne - colonne % 3;
 		for (int i = groupeX; i < groupeX + 3; i++) {
 			for (int j = groupeY; j < groupeY + 3; j++) {
 				if (sudoku[i][j] == num) {
@@ -81,8 +81,8 @@ class Sudoku {
 	}
 
 	//Utilise les trois fonctions définies précédemment pour vérifier la validité d'un nombre
-	private boolean isAl(int row, int col, int num) {
-		return !(isAlRow(row, num) || isAlCol(col, num) || isAlBox(row, col, num));
+	private boolean isAl(int ligne, int colonne, int num) {
+		return !(isAlligne(ligne, num) || isAlcolonne(colonne, num) || isAlBox(ligne, colonne, num));
 	}
 
 	
@@ -110,6 +110,7 @@ class Sudoku {
 	}
 
 	//Solveur par récursion est utilisé pour créer la grille et vérifier à chaque fois qu'on enlève un chiffre
+	//l'ordre des chiffres qui se trouve dans genSample est aléatoire à chaque itération
 	private boolean solve() {
 		genSample();
 		for (int i = 0; i < 9; i++) {
@@ -220,9 +221,9 @@ class Sudoku {
 	}
 
 	//Va remplir les cases dans le sudoku mais vérifie les conditions de placement avant
-	public boolean fillIn(int row, int col, int num) {
-		if (this.isAl(row, col, num)) {
-			sudoku[row][col] = num;
+	public boolean fillIn(int ligne, int colonne, int num) {
+		if (this.isAl(ligne, colonne, num)) {
+			sudoku[ligne][colonne] = num;
 		} else {
 			return false;
 		}
